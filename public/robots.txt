@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /brand-qa
+
+Sitemap: https://hultprize-utp.org/sitemap-index.xml
+

@@ -1,0 +1,115 @@
+---
+import BrandLogo from './BrandLogo.astro';
+import { BRAND_GEOMETRY, computeClearSpacePx, type BrandSurface } from '@/lib/brand';
+
+interface Props {
+  surface?: BrandSurface;
+  size?: 'header' | 'hero' | 'section' | 'footer';
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const {
+  surface = 'dark',
+  size = 'header',
+  loading = 'eager',
+  class: className = '',
+} = Astro.props;
+
+const SIZE_CONFIG = {
+  header: {
+    logoWidth: 74,
+    fontSize: 'clamp(0.74rem, 0.45vw + 0.62rem, 0.92rem)',
+  },
+  hero: {
+    logoWidth: 108,
+    fontSize: 'clamp(0.95rem, 0.8vw + 0.72rem, 1.25rem)',
+  },
+  section: {
+    logoWidth: 96,
+    fontSize: 'clamp(0.9rem, 0.6vw + 0.7rem, 1.125rem)',
+  },
+  footer: {
+    logoWidth: 88,
+    fontSize: 'clamp(0.85rem, 0.5vw + 0.68rem, 1.05rem)',
+  },
+} as const;
+
+const cfg = SIZE_CONFIG[size];
+const logoWidth = cfg.logoWidth;
+const logoHeight = Math.round(logoWidth * BRAND_GEOMETRY.aspectRatioHW);
+const gap2G = computeClearSpacePx(logoWidth);
+const barWidth = Math.max(1.5, Number((logoWidth * BRAND_GEOMETRY.barWidthRatio).toFixed(2)));
+---
+
+<div
+  class:list={['partner-lockup', `partner-lockup--${surface}`, `partner-lockup--${size}`, className]}
+  style={`--lockup-gap-2g: ${gap2G}px; --lockup-bar-h: ${logoHeight}px; --lockup-bar-w: ${barWidth}px; --lockup-fs: ${cfg.fontSize};`}
+  data-partner-lockup
+  data-lockup-surface={surface}
+  data-lockup-size={size}
+  data-lockup-2g={gap2G}
+>
+  <span class="partner-lockup__partner" aria-label="Universidad Tecnológica del Perú">
+    <span class="partner-lockup__line">Universidad</span>
+    <span class="partner-lockup__line">Tecnológica del Perú</span>
+  </span>
+
+  <span class="partner-lockup__bar" aria-hidden="true"></span>
+
+  <BrandLogo surface={surface} width={logoWidth} loading={loading} />
+</div>
+
+<style>
+  .partner-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lockup-gap-2g);
+    padding-block: calc(var(--lockup-gap-2g) * 0.35);
+    flex-shrink: 0;
+  }
+
+  .partner-lockup__partner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: right;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--lockup-fs);
+    line-height: 1.16;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .partner-lockup__line {
+    display: block;
+  }
+
+  .partner-lockup__bar {
+    display: block;
+    width: var(--lockup-bar-w);
+    height: var(--lockup-bar-h);
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  .partner-lockup--dark .partner-lockup__partner {
+    color: var(--gallery);
+  }
+
+  .partner-lockup--dark .partner-lockup__bar {
+    background-color: var(--gallery);
+  }
+
+  .partner-lockup--light .partner-lockup__partner,
+  .partner-lockup--vivid .partner-lockup__partner {
+    color: var(--ink);
+  }
+
+  .partner-lockup--light .partner-lockup__bar,
+  .partner-lockup--vivid .partner-lockup__bar {
+    background-color: var(--ink);
+  }
+</style>
+

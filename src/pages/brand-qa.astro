@@ -1,0 +1,166 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BrandLogo from '@/components/brand/BrandLogo.astro';
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import { BRAND_ASSETS } from '@/lib/brand';
+---
+
+<BaseLayout
+  title="Brand QA · Verificación de Identidad EF Hult Prize at UTP"
+  description="Página interna de control de calidad visual para auditar las reglas del manual de marca."
+  noindex={true}
+  includeChrome={false}
+>
+  <section class="qa-page">
+    <div class="container">
+      <header class="qa-header">
+        <p class="eyebrow-text">Auditoría de Marca · EF Hult Prize 2026 Qualifiers Guidelines</p>
+        <h1>Verificación de logotipos, superficies y Partner Lockup</h1>
+        <p>
+          Comprobación de ancho mínimo (≥ 70 px), espacio de seguridad (2g) y contraste por
+          superficie.
+        </p>
+      </header>
+
+      <div class="qa-grid">
+        <div class="qa-surface qa-surface--ink">
+          <h2>Superficie Oscura: Ink (#150007)</h2>
+          <p>Versión Inverted (EF Hult Prize - 4.png)</p>
+          <PartnerLockup surface="dark" size="hero" />
+          <BrandLogo surface="dark" width={70} withClearSpace={true} />
+        </div>
+
+        <div class="qa-surface qa-surface--midnight">
+          <h2>Superficie Oscura: Midnight (#292563)</h2>
+          <p>Versión Inverted (EF Hult Prize - 4.png)</p>
+          <PartnerLockup surface="dark" size="section" />
+        </div>
+
+        <div class="qa-surface qa-surface--light">
+          <h2>Superficie Clara: Gallery (#FFFFFF)</h2>
+          <p>Versión Standard (EF Hult Prize - 2.png)</p>
+          <PartnerLockup surface="light" size="hero" />
+          <BrandLogo surface="light" width={70} withClearSpace={true} />
+        </div>
+
+        <div class="qa-surface qa-surface--vivid">
+          <h2>Superficie Gradiente: Tropical Volcano</h2>
+          <p>Versión Mono Inverted (EF Hult Prize - BW1.png)</p>
+          <PartnerLockup surface="vivid" size="hero" />
+        </div>
+      </div>
+
+      <div class="qa-catalog">
+        <h2>Catálogo completo de los 6 archivos oficiales sincronizados</h2>
+        <div class="qa-catalog-grid">
+          {
+            Object.entries(BRAND_ASSETS).map(([key, item]) => (
+              <div
+                class:list={[
+                  'qa-asset-card',
+                  key.includes('inverted') ? 'qa-asset-card--dark' : 'qa-asset-card--light',
+                ]}
+              >
+                <img src={item.image.src} alt={item.label} width="120" height="82" />
+                <strong>{key}</strong>
+                <span>{item.recommendedSurface}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qa-page {
+    padding-block: 4rem;
+    background-color: var(--gallery-warm);
+  }
+
+  .qa-header {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .qa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .qa-surface {
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .qa-surface h2 {
+    font-size: 1.25rem;
+  }
+
+  .qa-surface p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .qa-surface--ink {
+    background-color: var(--ink);
+    color: var(--gallery);
+  }
+
+  .qa-surface--midnight {
+    background-color: var(--midnight);
+    color: var(--gallery);
+  }
+
+  .qa-surface--light {
+    background-color: var(--gallery);
+    color: var(--ink);
+    border: 1px solid var(--border-on-light-strong);
+  }
+
+  .qa-surface--vivid {
+    background: var(--grad-volcano);
+    color: var(--ink);
+  }
+
+  .qa-catalog h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .qa-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .qa-asset-card {
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .qa-asset-card--dark {
+    background-color: var(--ink);
+    color: var(--gallery);
+  }
+
+  .qa-asset-card--light {
+    background-color: var(--gallery);
+    color: var(--ink);
+    border: 1px solid var(--border-on-light);
+  }
+</style>
+

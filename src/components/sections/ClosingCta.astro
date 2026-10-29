@@ -1,0 +1,143 @@
+---
+import BrandArc from '@/components/brand/BrandArc.astro';
+import Grain from '@/components/brand/Grain.astro';
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import Button from '@/components/ui/Button.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import { resolveClosingCtas } from '@/lib/cta';
+
+const ctas = resolveClosingCtas();
+---
+
+<section id="contacto" class="closing-cta" data-tone="vivid" aria-labelledby="closing-cta-title">
+  <BrandArc gradient="volcano" position="closing-left" />
+  <Grain opacity={0.055} />
+
+  <div class="container closing-cta__inner">
+    <div class="closing-cta__card" data-reveal>
+      <div class="closing-cta__top">
+        <Eyebrow tone="vivid">Conecta con Hult Prize at UTP</Eyebrow>
+        <span class="closing-cta__status">{ctas.statusAnnouncement}</span>
+      </div>
+
+      <h2 id="closing-cta-title" class="closing-cta__title">
+        Tu próxima idea puede empezar hoy.
+      </h2>
+
+      <p class="closing-cta__lead lead-text">
+        Sigue nuestros canales oficiales para enterarte de las próximas actividades, talleres y
+        convocatorias en la Universidad Tecnológica del Perú, o explora las bases globales de la
+        competencia.
+      </p>
+
+      <div class="closing-cta__actions">
+        <Button
+          href={ctas.primary.href}
+          external={ctas.primary.external}
+          variant="ink-on-vivid"
+          size="lg"
+          icon="instagram"
+        >
+          {ctas.primary.label}
+        </Button>
+
+        <Button
+          href={ctas.secondary.href}
+          external={ctas.secondary.external}
+          variant="outline-on-vivid"
+          size="lg"
+          icon="linkedin"
+        >
+          {ctas.secondary.label}
+        </Button>
+
+        <Button
+          href={ctas.tertiary.href}
+          external={ctas.tertiary.external}
+          variant="outline-on-vivid"
+          size="lg"
+          icon="globe"
+        >
+          {ctas.tertiary.label}
+        </Button>
+      </div>
+
+      <div class="closing-cta__lockup">
+        <PartnerLockup surface="vivid" size="section" loading="eager" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing-cta {
+    position: relative;
+    background: var(--grad-volcano);
+    color: var(--ink);
+    padding-block: clamp(5rem, 10vw, 8.5rem);
+    overflow: clip;
+  }
+
+  .closing-cta__inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .closing-cta__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+
+  .closing-cta__top {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .closing-cta__status {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-pill);
+    background-color: rgba(21, 0, 7, 0.12);
+    border: 1px solid rgba(21, 0, 7, 0.28);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .closing-cta__title {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: var(--fs-display);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+
+  .closing-cta__lead {
+    color: rgba(21, 0, 7, 0.88);
+    font-weight: 700;
+    max-width: 58ch;
+  }
+
+  .closing-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: var(--space-xs);
+  }
+
+  .closing-cta__lockup {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1.5px solid rgba(21, 0, 7, 0.22);
+    width: 100%;
+  }
+</style>
+

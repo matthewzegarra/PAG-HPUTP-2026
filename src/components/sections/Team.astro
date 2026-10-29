@@ -1,0 +1,267 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { campusLeadership, teamAreas } from '@/data/team';
+import { site } from '@/data/site';
+import LinkArrow from '@/components/ui/LinkArrow.astro';
+---
+
+<Section id="equipo" tone="light" labelledBy="equipo-title">
+  <SectionHeading
+    id="equipo-title"
+    eyebrow="Equipo organizador · Edición 2026/2027"
+    title="Las personas detrás de la experiencia."
+    lead="El comité organizador de Hult Prize at UTP articula cinco áreas estratégicas para acompañar a los equipos estudiantiles, conectar mentores y construir comunidad."
+    tone="light"
+    badge="5 Áreas Oficiales"
+    badgeScope="local"
+    align="split"
+  />
+
+  <div class="team__areas-list" role="list">
+    {
+      teamAreas.map((area, idx) => (
+        <article class="team__area-row" role="listitem" data-reveal style={`--i: ${idx};`}>
+          <div class="team__area-main">
+            <span class="team__area-num" aria-hidden="true">
+              {area.number}
+            </span>
+            <div class="team__area-title-group">
+              <h3 class="team__area-name" lang="en">
+                {area.officialName}
+              </h3>
+              <span class="team__area-tag">{area.focusTag}</span>
+            </div>
+          </div>
+
+          <div class="team__area-body">
+            <p class="team__area-desc">{area.description}</p>
+
+            {area.members.length > 0 && (
+              <ul class="team__members-grid" aria-label={`Integrantes de ${area.officialName}`}>
+                {area.members.map((member) => (
+                  <li class="team__member-chip">
+                    {member.photo && (
+                      <img
+                        src={member.photo}
+                        alt={member.name}
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                      />
+                    )}
+                    <div>
+                      <strong>{member.name}</strong>
+                      <span>{member.role}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="team__governance-card" data-reveal>
+    <div class="team__governance-col">
+      <span class="eyebrow-text team__governance-eyebrow">Dirección de Campus & Comités</span>
+      <h3>Estructura organizativa 2026/2027</h3>
+      <p>
+        La presentación nominal de integrantes y cargos de la edición 2026/2027 se actualiza conforme
+        se publican las designaciones oficiales en los canales de <strong>{site.shortName}</strong>.
+      </p>
+      <p class="team__policy">{campusLeadership.policyNote}</p>
+    </div>
+
+    <div class="team__governance-actions">
+      <LinkArrow href={site.channels.instagram.url} external={true} tone="light">
+        Conoce al equipo en @hultprize_utp
+      </LinkArrow>
+      <LinkArrow href={site.channels.linkedin.url} external={true} tone="light">
+        Perfil en LinkedIn
+      </LinkArrow>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .team__areas-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid var(--ink);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .team__area-row {
+    position: relative;
+    display: grid;
+    gap: var(--space-md);
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-bottom: 1px solid var(--border-on-light-strong);
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  @media (min-width: 900px) {
+    .team__area-row {
+      grid-template-columns: 1fr 1.25fr;
+      align-items: center;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .team__area-row::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+    background: var(--grad-citypop);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .team__area-row:hover {
+    background-color: var(--gallery-warm);
+  }
+
+  .team__area-row:hover::after {
+    transform: scaleX(1);
+  }
+
+  .team__area-main {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+  }
+
+  .team__area-num {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 2.5vw, 2.15rem);
+    color: var(--heritage);
+    line-height: 1;
+  }
+
+  .team__area-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .team__area-name {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(1.45rem, 2.4vw, 2rem);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .team__area-tag {
+    display: inline-block;
+    width: fit-content;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+  }
+
+  .team__area-desc {
+    color: var(--text-on-light-muted);
+    font-size: 1.02rem;
+  }
+
+  .team__members-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .team__member-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--gallery);
+    border: 1px solid var(--border-on-light);
+    font-size: 0.88rem;
+  }
+
+  .team__member-chip img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .team__member-chip div {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .team__member-chip span {
+    font-size: 0.76rem;
+    color: var(--text-on-light-subtle);
+  }
+
+  .team__governance-card {
+    background-color: var(--gallery-warm);
+    border: 1px solid var(--border-on-light-strong);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    display: grid;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .team__governance-card {
+      grid-template-columns: 1.4fr 0.6fr;
+    }
+  }
+
+  .team__governance-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .team__governance-eyebrow {
+    color: var(--purple);
+  }
+
+  .team__governance-col h3 {
+    color: var(--ink);
+  }
+
+  .team__governance-col p {
+    color: var(--text-on-light-muted);
+    font-size: 0.96rem;
+  }
+
+  .team__policy {
+    font-size: 0.86rem !important;
+    color: var(--text-on-light-subtle) !important;
+    padding-top: 0.35rem;
+  }
+
+  .team__governance-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 900px) {
+    .team__governance-actions {
+      align-items: flex-end;
+    }
+  }
+</style>
+

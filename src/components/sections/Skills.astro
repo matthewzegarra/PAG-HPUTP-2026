@@ -1,0 +1,139 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Card from '@/components/ui/Card.astro';
+import { skills, skillsDisclaimer } from '@/data/skills';
+---
+
+<Section id="aprendizajes" tone="light" labelledBy="skills-title">
+  <SectionHeading
+    id="skills-title"
+    eyebrow="Desarrollo de talento · ¿Qué puedes desarrollar?"
+    title="Lo que construyes cuando construyes una startup."
+    lead="Más allá de una competencia, la experiencia Hult Prize impulsa capacidades prácticas de innovación, negocio y liderazgo aplicables a toda tu carrera profesional."
+    tone="light"
+    align="split"
+  />
+
+  <div class="skills__grid">
+    {
+      skills.map((skill, idx) => (
+        <Card
+          tone="light"
+          class:list={[
+            'skills__card',
+            { 'skills__card--featured': Boolean(skill.featured) },
+          ]}
+        >
+          <div class="skills__card-inner" data-reveal style={`--i: ${idx % 3};`}>
+            <div class="skills__card-top">
+              <span class="skills__num">{skill.number}</span>
+              <span class="skills__tag">{skill.tag}</span>
+            </div>
+            <h3 class="skills__title">{skill.title}</h3>
+            <p class="skills__desc">{skill.description}</p>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+
+  <p class="skills__disclaimer" data-reveal>
+    {skillsDisclaimer}
+  </p>
+</Section>
+
+<style>
+  .skills__grid {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .skills__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .skills__grid {
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .skills__grid :global(.skills__card:nth-child(1)) {
+      grid-column: span 7;
+      background-color: var(--gallery-warm);
+    }
+
+    .skills__grid :global(.skills__card:nth-child(2)) {
+      grid-column: span 5;
+      background-color: var(--gallery-warm);
+    }
+
+    .skills__grid :global(.skills__card:nth-child(3)),
+    .skills__grid :global(.skills__card:nth-child(4)),
+    .skills__grid :global(.skills__card:nth-child(5)) {
+      grid-column: span 4;
+    }
+
+    .skills__grid :global(.skills__card:nth-child(6)) {
+      grid-column: span 12;
+      background-color: var(--gallery-warm);
+    }
+  }
+
+  .skills__card-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .skills__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-on-light);
+  }
+
+  .skills__num {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--purple);
+  }
+
+  .skills__tag {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--gallery-muted);
+    color: var(--text-on-light-muted);
+  }
+
+  .skills__title {
+    color: var(--ink);
+  }
+
+  .skills__desc {
+    color: var(--text-on-light-muted);
+    font-size: 0.98rem;
+  }
+
+  .skills__disclaimer {
+    font-size: 0.88rem;
+    color: var(--text-on-light-subtle);
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--purple);
+    background-color: var(--gallery-warm);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    max-width: none;
+  }
+</style>
+

@@ -1,0 +1,34 @@
+{
+  "name": "ef-hult-prize-utp-2026",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web oficial de EF Hult Prize at Universidad Tecnológica del Perú — Edición 2026/2027",
+  "scripts": {
+    "predev": "node scripts/sync-brand-assets.mjs",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "prebuild": "node scripts/sync-brand-assets.mjs",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "sync:brand": "node scripts/sync-brand-assets.mjs",
+    "og:generate": "node scripts/generate-og.mjs",
+    "test": "playwright test",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource/figtree": "^5.1.0",
+    "astro": "^5.1.1",
+    "sharp": "^0.33.5",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.49.1",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1"
+  }
+}

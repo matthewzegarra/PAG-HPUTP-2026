@@ -1,0 +1,15 @@
+/* Figtree — Pesos autorizados por el manual (p. 6): Regular (400), Bold (700), Black (900) */
+@import '@fontsource/figtree/400.css';
+@import '@fontsource/figtree/700.css';
+@import '@fontsource/figtree/900.css';
+
+/* Fallback métrico ajustado para minimizar CLS antes de cargar Figtree */
+@font-face {
+  font-family: 'Figtree Fallback';
+  src: local('Segoe UI'), local('Arial'), local('Helvetica Neue');
+  size-adjust: 100.5%;
+  ascent-override: 95%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+

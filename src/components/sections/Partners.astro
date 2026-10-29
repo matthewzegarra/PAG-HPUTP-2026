@@ -1,0 +1,256 @@
+---
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Button from '@/components/ui/Button.astro';
+import { collaborationFormats, partners } from '@/data/partners';
+import { site } from '@/data/site';
+---
+
+<Section id="alianzas" tone="warm" labelledBy="alianzas-title">
+  <SectionHeading
+    id="alianzas-title"
+    eyebrow="Alianzas y ecosistema · Colaboración institucional"
+    title="Construyamos ecosistema juntos."
+    lead="Conectamos la energía emprendedora de los estudiantes de la UTP con especialistas, mentores, comunidades de innovación y organizaciones comprometidas con el desarrollo sostenible."
+    tone="light"
+    align="split"
+  />
+
+  <div class="partners__identity-banner" data-reveal>
+    <div class="partners__identity-copy">
+      <span class="eyebrow-text partners__identity-tag">Identidad institucional</span>
+      <h3>Respaldo global, comunidad universitaria local</h3>
+      <p>
+        Nuestra presencia articula el estándar internacional de <strong>EF Hult Prize</strong> con el
+        ecosistema académico de la <strong>Universidad Tecnológica del Perú</strong>.
+      </p>
+    </div>
+
+    <div class="partners__lockup-showcase">
+      <PartnerLockup surface="light" size="section" loading="eager" />
+    </div>
+  </div>
+
+  {
+    partners.length > 0 ? (
+      <div class="partners__verified-grid" data-reveal>
+        {partners.map((partner) => (
+          <article class="partners__logo-card">
+            <span class="partners__type-badge">{partner.typeLabel}</span>
+            <img
+              src={partner.logoPath}
+              alt={partner.name}
+              loading="lazy"
+              decoding="async"
+              class="partners__ally-logo"
+            />
+            <p class="partners__ally-name">{partner.name}</p>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="partners__collab-grid">
+        {collaborationFormats.map((format, idx) => (
+          <article class="partners__collab-card" data-reveal style={`--i: ${idx};`}>
+            <span class="partners__collab-index">0{idx + 1}</span>
+            <h3>{format.title}</h3>
+            <p>{format.description}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="partners__cta-banner" data-reveal>
+    <div class="partners__cta-text">
+      <h3>¿Tu organización o equipo impulsa la innovación y el emprendimiento?</h3>
+      <p>
+        Conversemos sobre oportunidades de mentoría, participación como jurado especialista o
+        colaboración institucional para la edición 2026/2027.
+      </p>
+    </div>
+    <div class="partners__cta-buttons">
+      <Button href={site.channels.linkedin.url} external={true} variant="primary-on-light" size="md">
+        Conectar por LinkedIn
+      </Button>
+      <Button
+        href={site.channels.instagram.url}
+        external={true}
+        variant="primary-on-light"
+        size="md"
+      >
+        Escribir por Instagram
+      </Button>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .partners__identity-banner {
+    background-color: var(--gallery);
+    border: 1px solid var(--border-on-light-strong);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.75rem, 3.5vw, 3rem);
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+    margin-bottom: var(--space-2xl);
+    box-shadow: var(--shadow-soft);
+  }
+
+  @media (min-width: 960px) {
+    .partners__identity-banner {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+
+  .partners__identity-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .partners__identity-tag {
+    color: var(--purple);
+  }
+
+  .partners__identity-copy h3 {
+    color: var(--ink);
+    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  }
+
+  .partners__identity-copy p {
+    color: var(--text-on-light-muted);
+  }
+
+  .partners__lockup-showcase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: var(--gallery);
+    border: 1px dashed var(--border-on-light-strong);
+    border-radius: var(--radius-lg);
+  }
+
+  .partners__collab-grid {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  @media (min-width: 900px) {
+    .partners__collab-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .partners__collab-card {
+    background-color: var(--gallery);
+    border: 1px solid var(--border-on-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .partners__collab-index {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--purple);
+  }
+
+  .partners__collab-card h3 {
+    color: var(--ink);
+  }
+
+  .partners__collab-card p {
+    color: var(--text-on-light-muted);
+    font-size: 0.96rem;
+  }
+
+  .partners__verified-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .partners__logo-card {
+    background-color: var(--gallery);
+    border: 1px solid var(--border-on-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .partners__type-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--gallery-muted);
+    color: var(--text-on-light-muted);
+  }
+
+  .partners__ally-logo {
+    max-height: 64px;
+    width: auto;
+    object-fit: contain;
+    filter: none !important;
+  }
+
+  .partners__ally-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .partners__cta-banner {
+    background-color: var(--gallery);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    justify-content: space-between;
+  }
+
+  @media (min-width: 960px) {
+    .partners__cta-banner {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .partners__cta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .partners__cta-text h3 {
+    color: var(--ink);
+  }
+
+  .partners__cta-text p {
+    color: var(--text-on-light-muted);
+  }
+
+  .partners__cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+</style>
+

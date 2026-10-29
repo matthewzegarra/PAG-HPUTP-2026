@@ -1,0 +1,82 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  tone?: 'dark' | 'light' | 'vivid';
+  badge?: string;
+  badgeScope?: 'global' | 'local';
+  align?: 'left' | 'split';
+}
+
+const {
+  id,
+  eyebrow,
+  title,
+  lead,
+  tone = 'light',
+  badge,
+  badgeScope,
+  align = 'left',
+} = Astro.props;
+---
+
+<header class:list={['section-heading', `section-heading--${align}`, `section-heading--${tone}`]} data-reveal>
+  <div class="section-heading__main">
+    <Eyebrow tone={tone} badge={badge} badgeScope={badgeScope}>{eyebrow}</Eyebrow>
+    <h2 id={id} class="section-heading__title">{title}</h2>
+  </div>
+  {lead && <p class="section-heading__lead lead-text">{lead}</p>}
+</header>
+
+<style>
+  .section-heading {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .section-heading--split {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: end;
+  }
+
+  @media (min-width: 960px) {
+    .section-heading--split {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .section-heading__title {
+    margin-bottom: var(--space-md);
+  }
+
+  .section-heading--split .section-heading__title {
+    margin-bottom: 0;
+  }
+
+  .section-heading--dark .section-heading__title {
+    color: var(--gallery);
+  }
+
+  .section-heading--dark .section-heading__lead {
+    color: var(--text-on-dark-muted);
+  }
+
+  .section-heading--light .section-heading__title {
+    color: var(--ink);
+  }
+
+  .section-heading--light .section-heading__lead {
+    color: var(--text-on-light-muted);
+  }
+
+  .section-heading--vivid .section-heading__title,
+  .section-heading--vivid .section-heading__lead {
+    color: var(--ink);
+  }
+</style>
+

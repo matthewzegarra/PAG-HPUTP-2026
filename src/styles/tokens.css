@@ -1,0 +1,86 @@
+:root {
+  /* Paleta oficial EF Hult Prize 2026 Qualifiers Brand Guidelines (p. 5) */
+  --ink: #150007;
+  --ink-elevated: #210811;
+  --ink-subtle: #2e101c;
+  --gallery: #ffffff;
+  --gallery-warm: #faf7f9;
+  --gallery-muted: #f2edf1;
+  --heritage: #ff329b;
+  --heritage-hover: #ff54ac;
+  --purple: #8a2890;
+  --purple-hover: #711e76;
+  --midnight: #292563;
+  --midnight-elevated: #342f78;
+  --sky: #12b1e7;
+  --sun: #fdd40e;
+
+  /* Textos y bordes con contraste WCAG AA verificado */
+  --text-on-dark: #ffffff;
+  --text-on-dark-muted: rgba(255, 255, 255, 0.78);
+  --text-on-dark-subtle: rgba(255, 255, 255, 0.58);
+  --text-on-light: #150007;
+  --text-on-light-muted: #4a3840;
+  --text-on-light-subtle: #6e5962;
+
+  --border-on-dark: rgba(255, 255, 255, 0.14);
+  --border-on-dark-strong: rgba(255, 255, 255, 0.28);
+  --border-on-light: rgba(21, 0, 7, 0.12);
+  --border-on-light-strong: rgba(21, 0, 7, 0.24);
+
+  /* Familias de gradientes oficiales (p. 5) */
+  --grad-cotton: linear-gradient(135deg, var(--sky) 0%, var(--heritage) 100%);
+  --grad-citypop: linear-gradient(135deg, var(--heritage) 0%, var(--purple) 100%);
+  --grad-volcano: linear-gradient(135deg, var(--sun) 0%, var(--heritage) 100%);
+
+  /* Tipografía oficial Figtree (p. 6) con fallback calibrado */
+  --font-sans: 'Figtree', 'Figtree Fallback', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+
+  /* Escala tipográfica fluida editorial */
+  --fs-display: clamp(2.85rem, 6.8vw + 0.9rem, 7.25rem);
+  --fs-h2: clamp(2.15rem, 4.2vw + 0.5rem, 4.5rem);
+  --fs-h3: clamp(1.325rem, 1.5vw + 0.6rem, 1.75rem);
+  --fs-lead: clamp(1.125rem, 1.1vw + 0.65rem, 1.35rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-eyebrow: 0.8125rem;
+
+  /* Espaciado y retícula */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+  --space-4xl: clamp(4.5rem, 8vw, 7.5rem);
+  --space-section: clamp(5rem, 9.5vw, 8.5rem);
+
+  --container-max: 1360px;
+  --container-pad: clamp(1.25rem, 4vw, 3rem);
+
+  /* Radios y sombras */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-pill: 9999px;
+
+  --shadow-soft: 0 16px 40px -12px rgba(21, 0, 7, 0.08);
+  --shadow-elevated: 0 24px 56px -16px rgba(21, 0, 7, 0.16);
+  --shadow-dark: 0 24px 64px -16px rgba(0, 0, 0, 0.55);
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+
+  /* Header */
+  --header-height: 5.5rem;
+  --header-height-compact: 4.5rem;
+}
+

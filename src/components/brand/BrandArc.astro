@@ -1,0 +1,110 @@
+---
+interface Props {
+  gradient?: 'citypop' | 'cotton' | 'volcano';
+  position?: 'hero-right' | 'journey-left' | 'closing-left';
+  animated?: boolean;
+  class?: string;
+}
+
+const {
+  gradient = 'citypop',
+  position = 'hero-right',
+  animated = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'brand-arc',
+    `brand-arc--${gradient}`,
+    `brand-arc--${position}`,
+    { 'brand-arc--animated': animated },
+    className,
+  ]}
+  aria-hidden="true"
+>
+  <div class="brand-arc__sphere"></div>
+</div>
+
+<style>
+  .brand-arc {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
+  .brand-arc__sphere {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .brand-arc--citypop .brand-arc__sphere {
+    background: radial-gradient(
+      circle at 32% 28%,
+      #ff7bc0 0%,
+      var(--heritage) 38%,
+      var(--purple) 78%,
+      #292563 100%
+    );
+    box-shadow: 0 0 120px rgba(255, 50, 155, 0.25);
+  }
+
+  .brand-arc--cotton .brand-arc__sphere {
+    background: radial-gradient(
+      circle at 35% 30%,
+      var(--sky) 0%,
+      #6b6be8 48%,
+      var(--heritage) 95%
+    );
+    opacity: 0.22;
+    filter: blur(2px);
+  }
+
+  .brand-arc--volcano .brand-arc__sphere {
+    background: radial-gradient(
+      circle at 25% 75%,
+      var(--sun) 0%,
+      #ff7a3d 48%,
+      var(--heritage) 92%
+    );
+  }
+
+  /* Posiciones editoriales inspiradas en las plantillas oficiales del manual */
+  .brand-arc--hero-right {
+    width: clamp(460px, 68vw, 1040px);
+    height: clamp(460px, 68vw, 1040px);
+    right: -18%;
+    bottom: -34%;
+  }
+
+  @media (min-width: 1024px) {
+    .brand-arc--hero-right {
+      right: -12%;
+      bottom: -28%;
+    }
+  }
+
+  .brand-arc--journey-left {
+    width: clamp(420px, 55vw, 860px);
+    height: clamp(420px, 55vw, 860px);
+    left: -22%;
+    top: 8%;
+  }
+
+  .brand-arc--closing-left {
+    width: clamp(500px, 72vw, 1120px);
+    height: clamp(500px, 72vw, 1120px);
+    left: -24%;
+    bottom: -42%;
+  }
+
+  .brand-arc--animated .brand-arc__sphere {
+    animation: arc-drift 18s var(--ease-inout) infinite alternate;
+    will-change: transform;
+  }
+</style>
+

@@ -1,0 +1,241 @@
+---
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { secondaryNavigation } from '@/data/navigation';
+import { site } from '@/data/site';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer surface-dark">
+  <div class="container site-footer__inner">
+    <div class="site-footer__top">
+      <div class="site-footer__identity">
+        <a
+          href="#inicio"
+          class="site-footer__lockup-link"
+          aria-label="EF Hult Prize at Universidad Tecnológica del Perú — Volver al inicio"
+        >
+          <PartnerLockup surface="dark" size="footer" loading="eager" />
+        </a>
+        <p class="site-footer__tagline">
+          Comunidad universitaria de <strong>{site.officialName}</strong> ({site.edition}). Conectamos
+          el talento estudiantil con el emprendimiento social y ambiental de impacto global.
+        </p>
+      </div>
+
+      <div class="site-footer__cols">
+        <nav aria-label="Navegación secundaria en pie de página" class="site-footer__col">
+          <h3 class="eyebrow-text site-footer__heading">Explorar</h3>
+          <ul class="site-footer__links">
+            {
+              secondaryNavigation.map((item) => (
+                <li>
+                  <a href={item.href} class="site-footer__link">
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="site-footer__col">
+          <h3 class="eyebrow-text site-footer__heading">Canales UTP</h3>
+          <ul class="site-footer__links">
+            <li>
+              <a
+                href={site.channels.instagram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="site-footer__link site-footer__link--icon"
+              >
+                <Icon name="instagram" size={18} />
+                <span>Instagram {site.channels.instagram.handle}</span>
+                <span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.channels.linkedin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="site-footer__link site-footer__link--icon"
+              >
+                <Icon name="linkedin" size={18} />
+                <span>LinkedIn Hult Prize UTP</span>
+                <span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </li>
+            {
+              site.contact.email && (
+                <li>
+                  <a href={`mailto:${site.contact.email}`} class="site-footer__link">
+                    {site.contact.email}
+                  </a>
+                </li>
+              )
+            }
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3 class="eyebrow-text site-footer__heading">EF Hult Prize Global</h3>
+          <ul class="site-footer__links">
+            <li>
+              <a
+                href={site.channels.globalWeb.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="site-footer__link site-footer__link--icon"
+              >
+                <Icon name="globe" size={18} />
+                <span>hultprize.org</span>
+                <Icon name="arrow-up-right" size={15} />
+                <span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.channels.globalWeb.howItWorks}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="site-footer__link"
+              >
+                How It Works (Reglas oficiales) ↗
+                <span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.channels.globalWeb.aboutUs}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="site-footer__link"
+              >
+                About Us (Organización) ↗
+                <span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.channels.globalWeb.register}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="site-footer__link"
+              >
+                Registro global (Open Application) ↗
+                <span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copy">
+        © {currentYear} {site.officialName}. Todos los derechos reservados.
+      </p>
+      <p class="site-footer__legal">
+        EF Hult Prize y su logotipo son marcas oficiales de Hult Prize Foundation / EF Education First.
+        Plataforma informativa de la comunidad universitaria en la Universidad Tecnológica del Perú.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--ink);
+    color: var(--text-on-dark);
+    border-top: 1px solid var(--border-on-dark);
+    padding-top: clamp(3.5rem, 6vw, 5.5rem);
+    padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+
+  @media (min-width: 960px) {
+    .site-footer__top {
+      grid-template-columns: 1.1fr 1.5fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .site-footer__identity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .site-footer__tagline {
+    font-size: 0.96rem;
+    color: var(--text-on-dark-muted);
+    max-width: 44ch;
+  }
+
+  .site-footer__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .site-footer__heading {
+    color: var(--heritage);
+    margin-bottom: var(--space-md);
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .site-footer__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-on-dark-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .site-footer__link:hover {
+    color: var(--sun);
+  }
+
+  .site-footer__bottom {
+    padding-top: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .site-footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .site-footer__copy {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-on-dark-muted);
+  }
+
+  .site-footer__legal {
+    font-size: 0.82rem;
+    color: var(--text-on-dark-subtle);
+    max-width: 64ch;
+  }
+</style>
+

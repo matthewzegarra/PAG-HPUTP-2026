@@ -1,0 +1,70 @@
+---
+interface Props {
+  tone?: 'dark' | 'light' | 'vivid';
+  badge?: string;
+  badgeScope?: 'global' | 'local';
+  class?: string;
+}
+
+const { tone = 'light', badge, badgeScope, class: className = '' } = Astro.props;
+---
+
+<div class:list={['ui-eyebrow', `ui-eyebrow--${tone}`, className]}>
+  <span class="ui-eyebrow__dot" aria-hidden="true"></span>
+  <span class="eyebrow-text"><slot /></span>
+  {
+    badge && (
+      <span
+        class:list={[
+          'badge-scope',
+          badgeScope === 'global' ? 'badge-scope--global' : 'badge-scope--local',
+        ]}
+      >
+        {badge}
+      </span>
+    )
+  }
+</div>
+
+<style>
+  .ui-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .ui-eyebrow__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .ui-eyebrow--dark {
+    color: var(--text-on-dark-muted);
+  }
+
+  .ui-eyebrow--dark .ui-eyebrow__dot {
+    background-color: var(--heritage);
+    box-shadow: 0 0 12px var(--heritage);
+  }
+
+  .ui-eyebrow--light {
+    color: var(--text-on-light-muted);
+  }
+
+  .ui-eyebrow--light .ui-eyebrow__dot {
+    background-color: var(--heritage);
+  }
+
+  .ui-eyebrow--vivid {
+    color: var(--ink);
+  }
+
+  .ui-eyebrow--vivid .ui-eyebrow__dot {
+    background-color: var(--ink);
+  }
+</style>
+

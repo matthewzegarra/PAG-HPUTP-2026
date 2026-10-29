@@ -1,0 +1,67 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  external?: boolean;
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { href, external = false, tone = 'light', class: className = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['link-arrow', `link-arrow--${tone}`, className]}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <span class="link-arrow__text">
+    <slot />
+    {external && <span class="sr-only"> (se abre en una nueva pestaña)</span>}
+  </span>
+  <span class="link-arrow__icon" aria-hidden="true">
+    <Icon name={external ? 'arrow-up-right' : 'arrow-right'} size={17} />
+  </span>
+</a>
+
+<style>
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 700;
+    font-size: 0.96rem;
+    text-decoration: underline;
+    text-underline-offset: 0.28em;
+    text-decoration-thickness: 1.5px;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .link-arrow--light {
+    color: var(--purple);
+  }
+
+  .link-arrow--light:hover {
+    color: var(--ink);
+  }
+
+  .link-arrow--dark {
+    color: var(--sun);
+  }
+
+  .link-arrow--dark:hover {
+    color: var(--gallery);
+  }
+
+  .link-arrow__icon {
+    display: inline-flex;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .link-arrow:hover .link-arrow__icon {
+    transform: translate(3px, -1px);
+  }
+</style>
+

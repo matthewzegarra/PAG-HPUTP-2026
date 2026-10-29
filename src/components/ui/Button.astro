@@ -1,0 +1,159 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'primary-on-dark' | 'secondary-on-dark' | 'primary-on-light' | 'ink-on-vivid' | 'outline-on-vivid';
+  size?: 'sm' | 'md' | 'lg';
+  external?: boolean;
+  icon?: IconName;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary-on-dark',
+  size = 'md',
+  external = false,
+  icon,
+  class: className = '',
+} = Astro.props;
+
+if (!href || href.trim() === '' || href.trim() === '#') {
+  throw new Error('[Button] Todo botón debe tener un destino real y verificable en `href`.');
+}
+
+const defaultIcon: IconName = icon ?? (external ? 'arrow-up-right' : 'arrow-right');
+---
+
+<a
+  href={href}
+  class:list={['ui-btn', `ui-btn--${variant}`, `ui-btn--${size}`, className]}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <span class="ui-btn__label">
+    <slot />
+    {external && <span class="sr-only"> (se abre en una nueva pestaña)</span>}
+  </span>
+  <span class="ui-btn__icon" aria-hidden="true">
+    <Icon name={defaultIcon} size={18} />
+  </span>
+</a>
+
+<style>
+  .ui-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 46px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+  }
+
+  .ui-btn--sm {
+    padding: 0.625rem 1.2rem;
+    font-size: 0.9375rem;
+    min-height: 44px;
+  }
+
+  .ui-btn--md {
+    padding: 0.85rem 1.55rem;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+
+  .ui-btn--lg {
+    padding: 1rem 1.85rem;
+    font-size: 1.0625rem;
+    min-height: 54px;
+  }
+
+  /* Heritage (#FF329B) con texto Ink (#150007) → ratio 6.0:1 WCAG AA */
+  .ui-btn--primary-on-dark {
+    background-color: var(--heritage);
+    color: var(--ink);
+    border: 2px solid var(--heritage);
+  }
+
+  .ui-btn--primary-on-dark:hover {
+    background-color: var(--sun);
+    border-color: var(--sun);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(255, 50, 155, 0.35);
+  }
+
+  /* Secundario sobre fondo oscuro */
+  .ui-btn--secondary-on-dark {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--gallery);
+    border: 1.5px solid var(--border-on-dark-strong);
+  }
+
+  .ui-btn--secondary-on-dark:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: var(--gallery);
+    transform: translateY(-2px);
+  }
+
+  /* Purple (#8A2890) con texto Gallery (#FFFFFF) → ratio 7.5:1 WCAG AAA */
+  .ui-btn--primary-on-light {
+    background-color: var(--purple);
+    color: var(--gallery);
+    border: 2px solid var(--purple);
+  }
+
+  .ui-btn--primary-on-light:hover {
+    background-color: var(--ink);
+    border-color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Ink sobre gradiente Tropical Volcano → ratio > 10:1 */
+  .ui-btn--ink-on-vivid {
+    background-color: var(--ink);
+    color: var(--gallery);
+    border: 2px solid var(--ink);
+  }
+
+  .ui-btn--ink-on-vivid:hover {
+    background-color: #2c0713;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Contorno Ink sobre gradiente Tropical Volcano */
+  .ui-btn--outline-on-vivid {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+  }
+
+  .ui-btn--outline-on-vivid:hover {
+    background-color: var(--gallery);
+    transform: translateY(-2px);
+  }
+
+  .ui-btn__icon {
+    display: inline-flex;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .ui-btn:hover .ui-btn__icon {
+    transform: translateX(4px);
+  }
+</style>
+

@@ -1,0 +1,359 @@
+---
+import BrandArc from '@/components/brand/BrandArc.astro';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import Button from '@/components/ui/Button.astro';
+import LinkArrow from '@/components/ui/LinkArrow.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { eligibilityCriteria, journeyStages } from '@/data/journey';
+import { convocatoria } from '@/data/convocatoria';
+import { site } from '@/data/site';
+---
+
+<Section id="como-funciona" tone="midnight" labelledBy="journey-title">
+  <BrandArc slot="backdrop" gradient="cotton" position="journey-left" />
+
+  <SectionHeading
+    id="journey-title"
+    eyebrow="Cómo funciona · La experiencia EF Hult Prize"
+    title="De una idea a un escenario global."
+    lead="El ciclo anual de EF Hult Prize se desarrolla de septiembre a septiembre a través de cinco fases progresivas. Cada etapa evalúa el crecimiento real del equipo y de su modelo de negocio."
+    tone="dark"
+    badge="Ruta global oficial"
+    badgeScope="global"
+    align="split"
+  />
+
+  <ol class="journey__timeline" aria-label="Las 5 etapas de la competencia global EF Hult Prize">
+    {
+      journeyStages.map((stage, idx) => (
+        <li class="journey__stage" data-reveal style={`--i: ${idx};`}>
+          <div class="journey__stage-top">
+            <span class="journey__step">Etapa {stage.step}</span>
+            <span class="journey__window">{stage.referenceWindow}</span>
+          </div>
+
+          <h3 class="journey__name" lang="en">
+            {stage.officialName}
+          </h3>
+
+          <p class="journey__summary">{stage.summary}</p>
+          <p class="journey__details">{stage.details}</p>
+
+          <div class="journey__highlight">
+            <Icon name="spark" size={16} />
+            <span>{stage.highlight}</span>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="journey__disclaimer" data-reveal>
+    <strong>Importante:</strong> {eligibilityCriteria.disclaimer}{' '}
+    <a
+      href={site.channels.globalWeb.competition}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="journey__inline-link"
+    >
+      Verificar etapas en hultprize.org ↗
+    </a>
+  </p>
+
+  <div class="journey__comparison" data-reveal>
+    <article class="journey__box journey__box--local">
+      <div class="journey__box-header">
+        <span class="badge-scope badge-scope--local">En la UTP · Actividad Local</span>
+        <StatusBadge status={convocatoria.status} />
+      </div>
+
+      <h3>¿Cómo funciona la participación desde la UTP?</h3>
+      <p>{convocatoria.localNote}</p>
+
+      <ul class="journey__local-list">
+        <li>
+          <strong>Vía 1 — Qualifier On-Campus:</strong> Si la universidad organiza una ronda local
+          confirmada en el ciclo, los equipos de UTP presentan su pitch ante un jurado convocado por
+          el comité local.
+        </li>
+        <li>
+          <strong>Vía 2 — Open Application:</strong> Si una institución no organiza ronda local o el
+          equipo postula de forma directa, EF Hult Prize habilita la inscripción mediante su portal
+          global.
+        </li>
+      </ul>
+
+      <div class="journey__box-actions">
+        <Button href={site.channels.instagram.url} external={true} variant="primary-on-dark" size="sm">
+          Ver anuncios en @hultprize_utp
+        </Button>
+        <Button
+          href={site.channels.globalWeb.register}
+          external={true}
+          variant="secondary-on-dark"
+          size="sm"
+        >
+          Portal global hultprize.org/register
+        </Button>
+      </div>
+    </article>
+
+    <article class="journey__box journey__box--criteria">
+      <div class="journey__box-header">
+        <span class="badge-scope badge-scope--global">Reglas globales verificadas</span>
+        <LinkArrow href={eligibilityCriteria.source} external={true} tone="dark">
+          How It Works
+        </LinkArrow>
+      </div>
+
+      <h3>Elegibilidad, entregables y criterios</h3>
+
+      <div class="journey__criteria-cols">
+        <div>
+          <h4 class="journey__subhead">¿Quiénes pueden competir?</h4>
+          <ul class="journey__check-list">
+            {
+              eligibilityCriteria.requirements.map((req) => (
+                <li>
+                  <Icon name="check" size={16} />
+                  <span>{req}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="journey__subhead">Entregables y evaluación</h4>
+          <ul class="journey__check-list">
+            {
+              eligibilityCriteria.deliverables.map((del) => (
+                <li>
+                  <Icon name="check" size={16} />
+                  <span>{del}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</Section>
+
+<style>
+  .journey__timeline {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .journey__timeline {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .journey__timeline {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .journey__stage {
+    position: relative;
+    background-color: rgba(21, 0, 7, 0.58);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-on-dark);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  .journey__stage:hover {
+    transform: translateY(-4px);
+    border-color: var(--sky);
+  }
+
+  .journey__stage-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+
+  .journey__step {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sun);
+  }
+
+  .journey__window {
+    font-size: 0.8rem;
+    color: var(--text-on-dark-subtle);
+  }
+
+  .journey__name {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: 1.45rem;
+    color: var(--gallery);
+  }
+
+  .journey__summary {
+    font-weight: 700;
+    font-size: 0.96rem;
+    color: var(--gallery);
+  }
+
+  .journey__details {
+    font-size: 0.9rem;
+    color: var(--text-on-dark-muted);
+    flex: 1;
+  }
+
+  .journey__highlight {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--border-on-dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--sky);
+  }
+
+  .journey__disclaimer {
+    font-size: 0.9rem;
+    color: var(--text-on-dark-muted);
+    max-width: none;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .journey__inline-link {
+    color: var(--sun);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .journey__comparison {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 1024px) {
+    .journey__comparison {
+      grid-template-columns: 1fr 1.15fr;
+    }
+  }
+
+  .journey__box {
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .journey__box--local {
+    background-color: var(--ink);
+    border: 2px solid var(--sky);
+    box-shadow: var(--shadow-dark);
+  }
+
+  .journey__box--criteria {
+    background-color: rgba(21, 0, 7, 0.72);
+    border: 1px solid var(--border-on-dark-strong);
+  }
+
+  .journey__box-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .journey__box h3 {
+    color: var(--gallery);
+  }
+
+  .journey__box p {
+    color: var(--text-on-dark-muted);
+  }
+
+  .journey__local-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+    color: var(--text-on-dark-muted);
+    font-size: 0.95rem;
+  }
+
+  .journey__local-list strong {
+    color: var(--gallery);
+  }
+
+  .journey__box-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: var(--space-sm);
+  }
+
+  .journey__criteria-cols {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 640px) {
+    .journey__criteria-cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .journey__subhead {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sun);
+    margin-bottom: 0.75rem;
+  }
+
+  .journey__check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    color: var(--text-on-dark-muted);
+  }
+
+  .journey__check-list li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 0.55rem;
+    align-items: start;
+  }
+
+  .journey__check-list :global(.ui-icon) {
+    color: var(--sky);
+    margin-top: 0.2rem;
+  }
+</style>
+

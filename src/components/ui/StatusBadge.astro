@@ -1,0 +1,96 @@
+---
+export type BadgeStatus = 'por-confirmar' | 'proximamente' | 'inscripciones-abiertas' | 'abierta' | 'realizado' | 'cerrada';
+
+interface Props {
+  status: BadgeStatus;
+  date?: string;
+}
+
+const { status, date } = Astro.props;
+
+// Regla editorial: si una fecha pasada se detecta en compilación, se fuerza "realizado"
+let resolvedStatus: BadgeStatus = status;
+if (date) {
+  const eventTime = Date.parse(date);
+  const now = Date.now();
+  if (!Number.isNaN(eventTime) && eventTime < now) {
+    resolvedStatus = 'realizado';
+  }
+}
+
+const LABELS: Record<BadgeStatus, string> = {
+  'por-confirmar': 'Por confirmar',
+  proximamente: 'Próximamente',
+  'inscripciones-abiertas': 'Inscripciones abiertas',
+  abierta: 'Convocatoria abierta',
+  realizado: 'Realizado',
+  cerrada: 'Convocatoria cerrada',
+};
+---
+
+<span class:list={['status-badge', `status-badge--${resolvedStatus}`]}>
+  <span class="status-badge__dot" aria-hidden="true"></span>
+  {LABELS[resolvedStatus]}
+</span>
+
+<style>
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .status-badge__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  .status-badge--inscripciones-abiertas,
+  .status-badge--abierta {
+    background-color: var(--sun);
+    color: var(--ink);
+  }
+
+  .status-badge--inscripciones-abiertas .status-badge__dot,
+  .status-badge--abierta .status-badge__dot {
+    background-color: var(--ink);
+  }
+
+  .status-badge--proximamente {
+    background-color: var(--sky);
+    color: var(--ink);
+  }
+
+  .status-badge--proximamente .status-badge__dot {
+    background-color: var(--ink);
+  }
+
+  .status-badge--por-confirmar {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--gallery);
+    border: 1px solid var(--border-on-dark-strong);
+  }
+
+  .status-badge--por-confirmar .status-badge__dot {
+    background-color: var(--sun);
+  }
+
+  .status-badge--realizado,
+  .status-badge--cerrada {
+    background-color: rgba(21, 0, 7, 0.08);
+    color: var(--text-on-light-muted);
+  }
+
+  .status-badge--realizado .status-badge__dot,
+  .status-badge--cerrada .status-badge__dot {
+    background-color: var(--text-on-light-subtle);
+  }
+</style>
+

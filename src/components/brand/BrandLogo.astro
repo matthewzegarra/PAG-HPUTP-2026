@@ -1,0 +1,75 @@
+---
+import {
+  BRAND_GEOMETRY,
+  computeClearSpacePx,
+  getLogoForSurface,
+  type BrandSurface,
+} from '@/lib/brand';
+
+interface Props {
+  surface?: BrandSurface;
+  width?: number;
+  withClearSpace?: boolean;
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const {
+  surface = 'dark',
+  width = 88,
+  withClearSpace = false,
+  loading = 'eager',
+  class: className = '',
+} = Astro.props;
+
+if (width < BRAND_GEOMETRY.minWidthPx) {
+  throw new Error(
+    `[BrandLogo] Ancho inválido (${width}px). El manual de marca EF Hult Prize (p. 3) exige un mínimo de ${BRAND_GEOMETRY.minWidthPx}px en pantalla.`
+  );
+}
+
+const asset = getLogoForSurface(surface);
+const height = Math.round(width * BRAND_GEOMETRY.aspectRatioHW);
+const clearSpace2G = computeClearSpacePx(width);
+---
+
+<span
+  class:list={['efhp-logo-frame', className]}
+  style={withClearSpace ? `padding: ${clearSpace2G}px;` : undefined}
+  data-brand-logo
+  data-surface={surface}
+  data-logo-width={width}
+  data-clear-space-2g={clearSpace2G}
+>
+  <img
+    src={asset.image.src}
+    alt="EF Hult Prize"
+    width={width}
+    height={height}
+    style={`width: ${width}px; height: ${height}px;`}
+    loading={loading}
+    decoding="sync"
+    class="efhp-logo-img"
+  />
+</span>
+
+<style>
+  .efhp-logo-frame {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 0;
+    user-select: none;
+  }
+
+  .efhp-logo-img {
+    display: block;
+    max-width: none;
+    /* Prohibido aplicar filtros, recoloraciones o deformaciones al logotipo oficial */
+    filter: none !important;
+    transform: none !important;
+    object-fit: contain;
+  }
+</style>
+

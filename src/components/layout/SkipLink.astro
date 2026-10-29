@@ -1,0 +1,27 @@
+<a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 9999;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--sun);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-200%);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+  }
+</style>
+

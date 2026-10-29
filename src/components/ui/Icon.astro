@@ -1,0 +1,134 @@
+---
+export type IconName = 'instagram' | 'linkedin' | 'arrow-right' | 'arrow-up-right' | 'check' | 'globe' | 'spark' | 'chevron-down';
+
+interface Props {
+  name: IconName;
+  size?: number;
+  label?: string;
+  class?: string;
+}
+
+const { name, size = 20, label, class: className = '' } = Astro.props;
+const isDecorative = !label;
+---
+
+<svg
+  class:list={['ui-icon', className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden={isDecorative ? 'true' : undefined}
+  aria-label={label}
+  role={label ? 'img' : undefined}
+  focusable="false"
+>
+  {
+    name === 'instagram' && (
+      <>
+        <rect
+          x="2.75"
+          y="2.75"
+          width="18.5"
+          height="18.5"
+          rx="5.25"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <circle cx="12" cy="12" r="4.25" stroke="currentColor" stroke-width="2" />
+        <circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    name === 'linkedin' && (
+      <>
+        <path
+          d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" />
+        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" />
+      </>
+    )
+  }
+  {
+    name === 'arrow-right' && (
+      <path
+        d="M5 12h14m-6-6 6 6-6 6"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    )
+  }
+  {
+    name === 'arrow-up-right' && (
+      <path
+        d="M7 17 17 7M8 7h9v9"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    )
+  }
+  {
+    name === 'check' && (
+      <path
+        d="M20 6 9 17l-5-5"
+        stroke="currentColor"
+        stroke-width="2.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    )
+  }
+  {
+    name === 'globe' && (
+      <>
+        <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="2" />
+        <path
+          d="M3 12h18M12 2.75c2.6 2.5 4 5.7 4 9.25s-1.4 6.75-4 9.25c-2.6-2.5-4-5.7-4-9.25s1.4-6.75 4-9.25z"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+      </>
+    )
+  }
+  {
+    name === 'spark' && (
+      <path
+        d="M12 2.5 14.4 9.6 21.5 12l-7.1 2.4L12 21.5 9.6 14.4 2.5 12l7.1-2.4L12 2.5z"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linejoin="round"
+      />
+    )
+  }
+  {
+    name === 'chevron-down' && (
+      <path
+        d="m6 9 6 6 6-6"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    )
+  }
+</svg>
+
+<style>
+  .ui-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+</style>
+

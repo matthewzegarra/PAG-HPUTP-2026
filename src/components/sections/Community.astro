@@ -1,0 +1,384 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import Icon from '@/components/ui/Icon.astro';
+import LinkArrow from '@/components/ui/LinkArrow.astro';
+import { activities } from '@/data/activities';
+import { site } from '@/data/site';
+
+const sortedActivities = [...activities].sort((a, b) => b.date.localeCompare(a.date));
+
+const communityPillars = [
+  {
+    tag: 'Formación práctica',
+    title: 'Talleres de ideación y modelo de negocio',
+    summary:
+      'Espacios diseñados para estructurar propuestas de valor, comprender los ODS y diseñar modelos de impacto.',
+  },
+  {
+    tag: 'Comunicación y liderazgo',
+    title: 'Sesiones de preparación de Pitch',
+    summary:
+      'Entrenamiento en narrativa de negocios, síntesis ejecutiva y defensa de proyectos ante paneles evaluadores.',
+  },
+  {
+    tag: 'Conexión multidisciplinaria',
+    title: 'Encuentros y convocatorias UTP',
+    summary:
+      'Puntos de encuentro para conectar estudiantes de ingeniería, negocios, humanidades y ciencias de la salud.',
+  },
+];
+---
+
+<Section id="comunidad" tone="ink" labelledBy="comunidad-title">
+  <SectionHeading
+    id="comunidad-title"
+    eyebrow="Comunidad y actividades · Hult Prize at UTP"
+    title="Una comunidad que se construye en movimiento."
+    lead="Talleres, sesiones formativas, convocatorias y momentos reales de aprendizaje colaborativo impulsados junto a estudiantes de la Universidad Tecnológica del Perú."
+    tone="dark"
+    badge="Comunidad Local UTP"
+    badgeScope="local"
+    align="split"
+  />
+
+  {
+    sortedActivities.length > 0 ? (
+      <div class="community__events-grid">
+        {sortedActivities.map((activity, idx) => (
+          <article class="community__event-card" data-reveal style={`--i: ${idx % 3};`}>
+            {activity.image && (
+              <div class="community__event-media">
+                <img
+                  src={activity.image}
+                  alt={activity.imageAlt ?? activity.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <div class="community__event-body">
+              <div class="community__event-meta">
+                <time datetime={activity.date} class="community__event-date">
+                  {activity.date}
+                </time>
+                <StatusBadge status={activity.status} date={activity.date} />
+              </div>
+              <h3 class="community__event-title">{activity.title}</h3>
+              <p class="community__event-desc">{activity.description}</p>
+              <div class="community__event-footer">
+                <LinkArrow href={activity.url} external={true} tone="dark">
+                  Ver publicación oficial
+                </LinkArrow>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="community__editorial">
+        <div class="community__pillars" data-reveal>
+          {communityPillars.map((item) => (
+            <article class="community__pillar">
+              <span class="eyebrow-text community__pillar-tag">{item.tag}</span>
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="community__channels-wrapper" data-reveal>
+          <div class="community__channels-intro">
+            <span class="eyebrow-text community__channels-eyebrow">
+              Agenda y anuncios verificados
+            </span>
+            <h3>Sigue el pulso oficial de la edición 2026/2027</h3>
+            <p>
+              Todas las convocatorias confirmadas, fechas de talleres y registros oficiales de Hult
+              Prize at UTP se publican directamente en nuestras redes institucionales.
+            </p>
+          </div>
+
+          <div class="community__channel-cards">
+            <a
+              href={site.channels.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="community__channel-card community__channel-card--ig"
+            >
+              <div class="community__channel-top">
+                <span class="community__channel-icon">
+                  <Icon name="instagram" size={26} />
+                </span>
+                <Icon name="arrow-up-right" size={22} />
+              </div>
+              <div class="community__channel-content">
+                <span class="eyebrow-text">Instagram Oficial</span>
+                <h4>{site.channels.instagram.handle}</h4>
+                <p>
+                  Convocatorias, historias de equipos, talleres, anuncios de temporada y cobertura
+                  de actividades en UTP.
+                </p>
+              </div>
+              <span class="sr-only"> (se abre en una nueva pestaña)</span>
+            </a>
+
+            <a
+              href={site.channels.linkedin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="community__channel-card community__channel-card--in"
+            >
+              <div class="community__channel-top">
+                <span class="community__channel-icon">
+                  <Icon name="linkedin" size={26} />
+                </span>
+                <Icon name="arrow-up-right" size={22} />
+              </div>
+              <div class="community__channel-content">
+                <span class="eyebrow-text">Red Profesional</span>
+                <h4>LinkedIn Hult Prize UTP</h4>
+                <p>
+                  Conexión con mentores, jurados, especialistas, organizaciones aliadas y novedades
+                  institucionales.
+                </p>
+              </div>
+              <span class="sr-only"> (se abre en una nueva pestaña)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+</Section>
+
+<style>
+  .community__events-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .community__events-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .community__events-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .community__event-card {
+    background-color: var(--ink-elevated);
+    border: 1px solid var(--border-on-dark);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .community__event-media img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .community__event-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .community__event-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .community__event-date {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--sun);
+  }
+
+  .community__event-title {
+    color: var(--gallery);
+  }
+
+  .community__event-desc {
+    color: var(--text-on-dark-muted);
+    font-size: 0.95rem;
+    flex: 1;
+  }
+
+  .community__editorial {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .community__pillars {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 900px) {
+    .community__pillars {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .community__pillar {
+    background-color: var(--ink-elevated);
+    border: 1px solid var(--border-on-dark);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 2.5vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .community__pillar-tag {
+    color: var(--heritage);
+  }
+
+  .community__pillar h3 {
+    color: var(--gallery);
+    font-size: 1.3rem;
+  }
+
+  .community__pillar p {
+    color: var(--text-on-dark-muted);
+    font-size: 0.95rem;
+  }
+
+  .community__channels-wrapper {
+    background: linear-gradient(145deg, var(--ink-elevated) 0%, #2a0a1a 100%);
+    border: 1px solid var(--border-on-dark-strong);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.75rem, 3.5vw, 3rem);
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .community__channels-wrapper {
+      grid-template-columns: 0.95fr 1.25fr;
+    }
+  }
+
+  .community__channels-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .community__channels-eyebrow {
+    color: var(--sun);
+  }
+
+  .community__channels-intro h3 {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--gallery);
+  }
+
+  .community__channels-intro p {
+    color: var(--text-on-dark-muted);
+  }
+
+  .community__channel-cards {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 640px) {
+    .community__channel-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .community__channel-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 1.65rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    border: 1px solid var(--border-on-dark-strong);
+    background-color: rgba(21, 0, 7, 0.72);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .community__channel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-dark);
+  }
+
+  .community__channel-card--ig:hover {
+    border-color: var(--heritage);
+  }
+
+  .community__channel-card--in:hover {
+    border-color: var(--sky);
+  }
+
+  .community__channel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--gallery);
+  }
+
+  .community__channel-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--grad-citypop);
+    color: var(--gallery);
+  }
+
+  .community__channel-card--in .community__channel-icon {
+    background: var(--grad-cotton);
+    color: var(--ink);
+  }
+
+  .community__channel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .community__channel-content .eyebrow-text {
+    color: var(--sun);
+    font-size: 0.74rem;
+  }
+
+  .community__channel-content h4 {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--gallery);
+  }
+
+  .community__channel-content p {
+    font-size: 0.9rem;
+    color: var(--text-on-dark-muted);
+  }
+</style>
+

@@ -1,0 +1,283 @@
+---
+import BrandArc from '@/components/brand/BrandArc.astro';
+import Grain from '@/components/brand/Grain.astro';
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import Button from '@/components/ui/Button.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Marquee from '@/components/ui/Marquee.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import { convocatoria } from '@/data/convocatoria';
+import { site } from '@/data/site';
+
+interface Props {
+  heroPhoto?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  } | null;
+}
+
+const { heroPhoto = null } = Astro.props;
+
+const marqueeItems = [
+  'Emprendimiento social',
+  'Innovación con propósito',
+  'Liderazgo universitario',
+  'Comunidad UTP',
+  'Sostenibilidad y ODS',
+  'Ambición global',
+  'Ideas que se convierten en impacto',
+];
+---
+
+<section id="inicio" class="hero surface-dark" data-tone="ink" aria-labelledby="hero-title">
+  <BrandArc gradient="citypop" position="hero-right" animated={true} />
+  <Grain opacity={0.06} />
+
+  <div class="container hero__container">
+    <div class="hero__grid">
+      <div class="hero__content">
+        <div data-reveal style="--i: 0;">
+          <Eyebrow tone="dark">
+            {site.officialName} · {site.edition}
+          </Eyebrow>
+        </div>
+
+        <h1 id="hero-title" class="hero__title">
+          <span class="hero__title-line" data-reveal-mask style="--i: 1;">
+            Las ideas que
+          </span>
+          <span class="hero__title-line" data-reveal-mask style="--i: 2;">
+            cambian el mundo
+          </span>
+          <span class="hero__title-line" data-reveal-mask style="--i: 3;">
+            <span class="hero__highlight">empiezan aquí.</span>
+          </span>
+        </h1>
+
+        <p class="hero__lead lead-text" data-reveal style="--i: 4;">
+          Conecta tu talento con el emprendimiento y convierte problemas reales en soluciones con
+          impacto.
+        </p>
+
+        <div class="hero__actions" data-reveal style="--i: 5;">
+          <Button href="#como-funciona" variant="primary-on-dark" size="lg">
+            Descubre cómo funciona
+          </Button>
+          <Button href="#comunidad" variant="secondary-on-dark" size="lg">
+            Conoce nuestra comunidad
+          </Button>
+        </div>
+      </div>
+
+      <aside class="hero__showcase" aria-label="Identidad y síntesis del programa" data-reveal style="--i: 3;">
+        {
+          heroPhoto ? (
+            <figure class="hero__photo-card">
+              <img
+                src={heroPhoto.src}
+                alt={heroPhoto.alt}
+                class="hero__photo-img"
+                loading="eager"
+                decoding="async"
+              />
+              {heroPhoto.caption && (
+                <figcaption class="hero__photo-caption">{heroPhoto.caption}</figcaption>
+              )}
+            </figure>
+          ) : (
+            <div class="hero__manifesto-card">
+              <div class="hero__manifesto-header">
+                <span class="eyebrow-text hero__manifesto-tag">Capítulo Universitario</span>
+                <StatusBadge status={convocatoria.status} />
+              </div>
+
+              <div class="hero__manifesto-lockup">
+                <PartnerLockup surface="dark" size="section" loading="eager" />
+              </div>
+
+              <p class="hero__manifesto-quote">
+                «Ideas que se convierten en impacto.»
+              </p>
+
+              <dl class="hero__manifesto-pillars">
+                <div class="hero__pillar-row">
+                  <dt>Enfoque</dt>
+                  <dd>Startups con fines de lucro e impacto social o ambiental medible</dd>
+                </div>
+                <div class="hero__pillar-row">
+                  <dt>Marco global</dt>
+                  <dd>Objetivos de Desarrollo Sostenible (ODS) de las Naciones Unidas</dd>
+                </div>
+                <div class="hero__pillar-row">
+                  <dt>Sede local</dt>
+                  <dd>Comunidad estudiantil en la Universidad Tecnológica del Perú</dd>
+                </div>
+              </dl>
+            </div>
+          )
+        }
+      </aside>
+    </div>
+  </div>
+
+  <Marquee items={marqueeItems} />
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--ink);
+    color: var(--gallery);
+    padding-top: calc(var(--header-height) + clamp(2rem, 5vw, 4rem));
+    overflow: clip;
+  }
+
+  .hero__container {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .hero__grid {
+    width: 100%;
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__grid {
+      grid-template-columns: 1.25fr 0.85fr;
+    }
+  }
+
+  .hero__title {
+    margin-bottom: var(--space-lg);
+    color: var(--gallery);
+  }
+
+  .hero__title-line {
+    display: block;
+    padding-bottom: 0.06em;
+  }
+
+  .hero__highlight {
+    color: var(--sun);
+    text-decoration-line: underline;
+    text-decoration-color: var(--heritage);
+    text-decoration-thickness: 0.09em;
+    text-underline-offset: 0.14em;
+    text-decoration-skip-ink: auto;
+  }
+
+  .hero__lead {
+    color: var(--text-on-dark-muted);
+    margin-bottom: var(--space-xl);
+    max-width: 52ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero__manifesto-card {
+    position: relative;
+    background: rgba(21, 0, 7, 0.78);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    box-shadow: var(--shadow-dark);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .hero__manifesto-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+
+  .hero__manifesto-tag {
+    color: var(--text-on-dark-muted);
+  }
+
+  .hero__manifesto-lockup {
+    padding-block: 0.5rem;
+  }
+
+  .hero__manifesto-quote {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--gallery);
+  }
+
+  .hero__manifesto-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    border-top: 1px solid var(--border-on-dark);
+    padding-top: var(--space-md);
+  }
+
+  .hero__pillar-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .hero__pillar-row dt {
+    font-weight: 700;
+    color: var(--sun);
+    text-transform: uppercase;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    padding-top: 0.15rem;
+  }
+
+  .hero__pillar-row dd {
+    color: var(--text-on-dark-muted);
+  }
+
+  .hero__photo-card {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--border-on-dark-strong);
+    box-shadow: var(--shadow-dark);
+    background-color: var(--ink-elevated);
+  }
+
+  .hero__photo-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .hero__photo-caption {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-on-dark-muted);
+  }
+</style>
+

@@ -1,0 +1,248 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import LinkArrow from '@/components/ui/LinkArrow.astro';
+import { globalActionPillars, introPillars } from '@/data/globalFacts';
+import { site } from '@/data/site';
+---
+
+<Section id="iniciativa" tone="light" labelledBy="iniciativa-title">
+  <SectionHeading
+    id="iniciativa-title"
+    eyebrow="La iniciativa · Qué es Hult Prize at UTP"
+    title="Emprender también puede cambiar el mundo."
+    lead="Hult Prize conecta a estudiantes universitarios con el emprendimiento social y los desafía a crear empresas con fines de lucro capaces de generar impacto social o ambiental medible."
+    tone="light"
+    align="split"
+  />
+
+  <div class="intro__narrative" data-reveal>
+    <div class="intro__narrative-col">
+      <span class="badge-scope badge-scope--global">El movimiento global</span>
+      <p>
+        Fundado en Hult International Business School y respaldado por la familia Hult (fundadores
+        de <strong>EF Education First</strong>), EF Hult Prize impulsa una filosofía de triple
+        impacto: empresas rentables que miden su éxito por su aporte a las personas, al planeta y a
+        la sostenibilidad financiera.
+      </p>
+    </div>
+
+    <div class="intro__narrative-col">
+      <span class="badge-scope badge-scope--local">El capítulo en UTP</span>
+      <p>
+        <strong>{site.officialName}</strong> acerca esa experiencia a nuestra comunidad
+        universitaria, promoviendo espacios donde estudiantes de distintas carreras colaboran,
+        validan problemáticas reales y transforman ideas en soluciones con ambición global.
+      </p>
+    </div>
+  </div>
+
+  <div class="intro__pillars-grid">
+    {
+      introPillars.map((pillar, idx) => (
+        <article class="intro__pillar-card" data-reveal style={`--i: ${idx};`}>
+          <span class="intro__pillar-num" aria-hidden="true">
+            {pillar.number}
+          </span>
+          <h3 class="intro__pillar-title">{pillar.title}</h3>
+          <p class="intro__pillar-desc">{pillar.description}</p>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="intro__model-strip" data-reveal>
+    <div class="intro__model-header">
+      <p class="eyebrow-text intro__model-eyebrow">Los tres pilares globales de acción</p>
+      <LinkArrow href={site.channels.globalWeb.aboutUs} external={true} tone="light">
+        Conoce el modelo en hultprize.org
+      </LinkArrow>
+    </div>
+
+    <div class="intro__model-items">
+      {
+        globalActionPillars.map((item) => (
+          <div class="intro__model-item">
+            <h4 class="intro__model-name">
+              {item.name} <span lang="en">({item.enName})</span>
+            </h4>
+            <p>{item.summary}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <blockquote class="intro__quote">
+      <p lang="en">“If you want young people to change the world, you have to let them try.”</p>
+      <footer>
+        — <strong>Bertil Hult</strong>, Benefactor de EF Hult Prize y Fundador de EF Education First
+      </footer>
+    </blockquote>
+  </div>
+</Section>
+
+<style>
+  .intro__narrative {
+    display: grid;
+    gap: var(--space-xl);
+    padding-bottom: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--border-on-light);
+  }
+
+  @media (min-width: 860px) {
+    .intro__narrative {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .intro__narrative-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .intro__narrative-col p {
+    color: var(--text-on-light-muted);
+    font-size: 1.08rem;
+  }
+
+  .intro__pillars-grid {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-3xl);
+  }
+
+  @media (min-width: 900px) {
+    .intro__pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .intro__pillar-card {
+    position: relative;
+    background-color: var(--gallery-warm);
+    border: 1px solid var(--border-on-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .intro__pillar-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--purple);
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Heritage (#FF329B) solo para display grande >= 24px (cumple ratio texto grande) */
+  .intro__pillar-num {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--heritage);
+  }
+
+  .intro__pillar-title {
+    color: var(--ink);
+  }
+
+  .intro__pillar-desc {
+    color: var(--text-on-light-muted);
+    font-size: 1rem;
+  }
+
+  .intro__model-strip {
+    background-color: var(--ink);
+    color: var(--gallery);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.75rem, 3.5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .intro__model-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+
+  .intro__model-eyebrow {
+    color: var(--sun);
+  }
+
+  .intro__model-strip :global(.link-arrow--light) {
+    color: var(--sun);
+  }
+
+  .intro__model-strip :global(.link-arrow--light:hover) {
+    color: var(--gallery);
+  }
+
+  .intro__model-items {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 860px) {
+    .intro__model-items {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .intro__model-item h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--gallery);
+    margin-bottom: 0.4rem;
+  }
+
+  .intro__model-item h4 span {
+    font-weight: 400;
+    font-size: 0.92rem;
+    color: var(--text-on-dark-subtle);
+  }
+
+  .intro__model-item p {
+    font-size: 0.95rem;
+    color: var(--text-on-dark-muted);
+  }
+
+  .intro__quote {
+    border-top: 1px solid var(--border-on-dark);
+    padding-top: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .intro__quote p {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    letter-spacing: -0.02em;
+    color: var(--gallery);
+    max-width: none;
+  }
+
+  .intro__quote footer {
+    font-size: 0.88rem;
+    color: var(--text-on-dark-muted);
+  }
+</style>
+

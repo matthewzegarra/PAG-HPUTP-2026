@@ -1,0 +1,147 @@
+---
+import { globalFacts } from '@/data/globalFacts';
+import Icon from '@/components/ui/Icon.astro';
+---
+
+<aside
+  class="global-facts surface-dark"
+  aria-label="Cifras globales verificadas de EF Hult Prize"
+>
+  <div class="container global-facts__inner">
+    <div class="global-facts__header" data-reveal>
+      <span class="badge-scope badge-scope--global">Alcance global EF Hult Prize</span>
+      <p class="global-facts__note">
+        Datos globales oficiales de la competencia internacional (no corresponden a estadísticas
+        locales de UTP). Fuente verificada: <a
+          href="https://www.hultprize.org/about-us"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="global-facts__source-link"
+        >
+          hultprize.org ↗
+        </a>
+      </p>
+    </div>
+
+    <div class="global-facts__grid">
+      {
+        globalFacts.map((fact, idx) => (
+          <div class="global-facts__item" data-reveal style={`--i: ${idx};`}>
+            <p class="global-facts__figure">{fact.figure}</p>
+            <p class="global-facts__label">{fact.label}</p>
+            <p class="global-facts__detail">{fact.detail}</p>
+            <a
+              href={fact.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="global-facts__verify"
+            >
+              <span>Fuente oficial</span>
+              <Icon name="arrow-up-right" size={14} />
+              <span class="sr-only"> para {fact.figure} (se abre en una nueva pestaña)</span>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</aside>
+
+<style>
+  .global-facts {
+    background-color: var(--ink);
+    color: var(--gallery);
+    padding-block: clamp(3rem, 5vw, 4.5rem);
+    border-top: 1px solid var(--border-on-dark);
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+
+  .global-facts__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+
+  .global-facts__note {
+    font-size: 0.88rem;
+    color: var(--text-on-dark-muted);
+    max-width: none;
+  }
+
+  .global-facts__source-link {
+    color: var(--sun);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .global-facts__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 640px) {
+    .global-facts__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .global-facts__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .global-facts__item {
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    background-color: var(--ink-elevated);
+    border: 1px solid var(--border-on-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .global-facts__figure {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--sun);
+  }
+
+  .global-facts__label {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--gallery);
+  }
+
+  .global-facts__detail {
+    font-size: 0.9rem;
+    color: var(--text-on-dark-muted);
+    flex: 1;
+  }
+
+  .global-facts__verify {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--sky);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .global-facts__verify:hover {
+    color: var(--sun);
+  }
+</style>
+

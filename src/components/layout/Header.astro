@@ -1,0 +1,228 @@
+---
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import Button from '@/components/ui/Button.astro';
+import MobileMenu from './MobileMenu.astro';
+import { navigation } from '@/data/navigation';
+import { resolveHeaderCta } from '@/lib/cta';
+
+const cta = resolveHeaderCta();
+---
+
+<div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
+
+<header class="site-header surface-dark" data-site-header>
+  <div class="container site-header__inner">
+    <a
+      href="#inicio"
+      class="site-header__brand"
+      aria-label="EF Hult Prize at Universidad Tecnológica del Perú — Ir al inicio"
+    >
+      <PartnerLockup surface="dark" size="header" loading="eager" />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Navegación principal">
+      <ul class="site-header__list">
+        {
+          navigation.map((item) => (
+            <li>
+              <a href={item.href} class="site-header__link" data-nav-link={item.id}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <div class="site-header__cta-wrap">
+        <Button
+          href={cta.href}
+          external={cta.external}
+          variant="primary-on-dark"
+          size="sm"
+        >
+          {cta.label}
+        </Button>
+      </div>
+
+      <button
+        type="button"
+        class="site-header__menu-btn"
+        aria-expanded="false"
+        aria-controls="mobile-navigation-drawer"
+        aria-label="Abrir menú de navegación"
+        data-menu-toggle
+      >
+        <span class="site-header__menu-bars" aria-hidden="true">
+          <span class="site-header__bar"></span>
+          <span class="site-header__bar"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<MobileMenu />
+
+<style>
+  .header-sentinel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 72px;
+    pointer-events: none;
+  }
+
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: var(--header-height);
+    background-color: rgba(21, 0, 7, 0.72);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition:
+      height var(--dur-base) var(--ease-out),
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .site-header.is-scrolled {
+    height: var(--header-height-compact);
+    background-color: rgba(21, 0, 7, 0.96);
+    border-bottom-color: var(--border-on-dark);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  .site-header__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 1.8vw, 1.85rem);
+  }
+
+  .site-header__link {
+    position: relative;
+    padding-block: 0.4rem;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: var(--text-on-dark-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+  }
+
+  .site-header__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--heritage);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .site-header__link:hover,
+  .site-header__link[aria-current='true'] {
+    color: var(--gallery);
+  }
+
+  .site-header__link[aria-current='true']::after {
+    transform: scaleX(1);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .site-header__cta-wrap {
+    display: none;
+  }
+
+  .site-header__menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-on-dark-strong);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--gallery);
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .site-header__menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: var(--gallery);
+  }
+
+  .site-header__menu-bars {
+    position: relative;
+    width: 20px;
+    height: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .site-header__bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 2px;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .site-header__menu-btn[aria-expanded='true'] .site-header__bar:first-child {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .site-header__menu-btn[aria-expanded='true'] .site-header__bar:last-child {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+
+  @media (min-width: 1080px) {
+    .site-header__nav {
+      display: block;
+    }
+
+    .site-header__cta-wrap {
+      display: block;
+    }
+
+    .site-header__menu-btn {
+      display: none;
+    }
+  }
+</style>
+

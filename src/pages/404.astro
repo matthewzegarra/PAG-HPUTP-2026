@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PartnerLockup from '@/components/brand/PartnerLockup.astro';
+import Button from '@/components/ui/Button.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import { site } from '@/data/site';
+---
+
+<BaseLayout
+  title={`Página no encontrada | ${site.officialName}`}
+  description="La ruta solicitada no existe. Regresa al inicio de EF Hult Prize at Universidad Tecnológica del Perú."
+  noindex={true}
+>
+  <section class="not-found surface-dark" data-tone="ink">
+    <div class="container not-found__inner">
+      <Eyebrow tone="dark">Error 404 · Ruta no encontrada</Eyebrow>
+      <h1>Esta página no existe, pero tu próxima idea sí.</h1>
+      <p class="lead-text">
+        Verifica la dirección o vuelve a la página principal de <strong>{site.officialName}</strong>.
+      </p>
+      <div class="not-found__actions">
+        <Button href="/" variant="primary-on-dark" size="lg">
+          Volver al inicio
+        </Button>
+        <Button href={site.channels.instagram.url} external={true} variant="secondary-on-dark" size="lg">
+          Ir a @hultprize_utp
+        </Button>
+      </div>
+      <div class="not-found__lockup">
+        <PartnerLockup surface="dark" size="section" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 82svh;
+    background-color: var(--ink);
+    color: var(--gallery);
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .not-found__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+
+  .not-found p {
+    color: var(--text-on-dark-muted);
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .not-found__lockup {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-on-dark);
+  }
+</style>
+

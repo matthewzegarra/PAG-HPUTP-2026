@@ -1,0 +1,192 @@
+---
+import { navigation } from '@/data/navigation';
+import { site } from '@/data/site';
+import { resolveHeaderCta } from '@/lib/cta';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+const cta = resolveHeaderCta();
+---
+
+<div
+  id="mobile-navigation-drawer"
+  class="mobile-menu surface-dark"
+  aria-label="Menú de navegación móvil"
+  aria-hidden="true"
+  inert
+  data-mobile-menu
+>
+  <div class="container mobile-menu__inner">
+    <p class="eyebrow-text mobile-menu__eyebrow">
+      {site.officialName} · {site.edition}
+    </p>
+
+    <nav aria-label="Navegación principal móvil">
+      <ul class="mobile-menu__list">
+        {
+          navigation.map((item, idx) => (
+            <li class="mobile-menu__item" style={`--item-idx: ${idx};`}>
+              <a href={item.href} class="mobile-menu__link" data-mobile-nav-link>
+                <span class="mobile-menu__num">0{idx + 1}</span>
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="mobile-menu__footer">
+      <div class="mobile-menu__cta">
+        <Button
+          href={cta.href}
+          external={cta.external}
+          variant="primary-on-dark"
+          size="lg"
+          class="mobile-menu__cta-btn"
+        >
+          {cta.label}
+        </Button>
+      </div>
+
+      <div class="mobile-menu__channels">
+        <a
+          href={site.channels.instagram.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-menu__social"
+        >
+          <Icon name="instagram" size={20} />
+          <span>{site.channels.instagram.handle}</span>
+          <span class="sr-only"> (se abre en una nueva pestaña)</span>
+        </a>
+        <a
+          href={site.channels.linkedin.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-menu__social"
+        >
+          <Icon name="linkedin" size={20} />
+          <span>LinkedIn UTP</span>
+          <span class="sr-only"> (se abre en una nueva pestaña)</span>
+        </a>
+        <a
+          href={site.channels.globalWeb.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-menu__social"
+        >
+          <Icon name="globe" size={20} />
+          <span>hultprize.org</span>
+          <span class="sr-only"> (se abre en una nueva pestaña)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background-color: var(--ink);
+    color: var(--gallery);
+    padding-top: calc(var(--header-height) + 1.5rem);
+    padding-bottom: 2.5rem;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      visibility var(--dur-base) var(--ease-out);
+  }
+
+  .mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-menu__inner {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-xl);
+  }
+
+  .mobile-menu__eyebrow {
+    color: var(--text-on-dark-subtle);
+    border-bottom: 1px solid var(--border-on-dark);
+    padding-bottom: var(--space-sm);
+  }
+
+  .mobile-menu__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .mobile-menu__link {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(1.85rem, 6vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--gallery);
+    transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+
+  .mobile-menu__link:hover,
+  .mobile-menu__link:focus-visible {
+    color: var(--heritage);
+    transform: translateX(6px);
+  }
+
+  .mobile-menu__num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--heritage);
+    letter-spacing: 0.08em;
+  }
+
+  .mobile-menu__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-on-dark);
+  }
+
+  .mobile-menu__channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .mobile-menu__social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-on-dark-muted);
+  }
+
+  .mobile-menu__social:hover {
+    color: var(--sun);
+  }
+
+  @media (min-width: 1080px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+</style>
+

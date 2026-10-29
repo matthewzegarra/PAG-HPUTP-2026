@@ -1,0 +1,69 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'light' | 'warm' | 'ink' | 'midnight' | 'vivid';
+  labelledBy?: string;
+  class?: string;
+}
+
+const { id, tone = 'light', labelledBy, class: className = '' } = Astro.props;
+const isDark = tone === 'ink' || tone === 'midnight';
+---
+
+<section
+  id={id}
+  data-tone={tone}
+  aria-labelledby={labelledBy}
+  class:list={[
+    'ui-section',
+    `ui-section--${tone}`,
+    { 'surface-dark': isDark },
+    className,
+  ]}
+>
+  <slot name="backdrop" />
+  <div class="container ui-section__inner">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .ui-section {
+    position: relative;
+    padding-block: var(--space-section);
+    overflow-x: clip;
+  }
+
+  .ui-section__inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .ui-section--light {
+    background-color: var(--gallery);
+    color: var(--text-on-light);
+  }
+
+  .ui-section--warm {
+    background-color: var(--gallery-warm);
+    color: var(--text-on-light);
+    border-top: 1px solid var(--border-on-light);
+    border-bottom: 1px solid var(--border-on-light);
+  }
+
+  .ui-section--ink {
+    background-color: var(--ink);
+    color: var(--text-on-dark);
+  }
+
+  .ui-section--midnight {
+    background-color: var(--midnight);
+    color: var(--text-on-dark);
+  }
+
+  .ui-section--vivid {
+    background: var(--grad-volcano);
+    color: var(--ink);
+  }
+</style>
+

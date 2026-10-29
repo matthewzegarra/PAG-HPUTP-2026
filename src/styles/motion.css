@@ -1,0 +1,69 @@
+/* Animaciones progresivas: sin JS todo es 100 % visible */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+html.js [data-reveal].is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Revelado editorial de máscara ascendente para titulares clave */
+html.js [data-reveal-mask] {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(18px);
+  transition:
+    clip-path var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+
+html.js [data-reveal-mask].is-in {
+  clip-path: inset(-12% -4% -18% -4%);
+  transform: translateY(0);
+}
+
+/* Deriva orgánica lenta para el arco del hero */
+@keyframes arc-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-14px, -10px, 0) scale(1.03) rotate(-2deg);
+  }
+}
+
+/* Cinta de valores en movimiento continuo */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Respeto estricto a prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.js [data-reveal],
+  html.js [data-reveal-mask] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+

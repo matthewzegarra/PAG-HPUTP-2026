@@ -1,0 +1,133 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Icon from '@/components/ui/Icon.astro';
+import LinkArrow from '@/components/ui/LinkArrow.astro';
+import { faqItems } from '@/data/faq';
+---
+
+<Section id="preguntas" tone="light" labelledBy="faq-title">
+  <SectionHeading
+    id="faq-title"
+    eyebrow="Preguntas frecuentes · Dudas clave"
+    title="Respuestas claras antes de dar el primer paso."
+    lead="Información verificada sobre el funcionamiento global de EF Hult Prize y los canales oficiales de nuestra comunidad en la Universidad Tecnológica del Perú."
+    tone="light"
+    align="split"
+  />
+
+  <div class="faq__list">
+    {
+      faqItems.map((item, idx) => (
+        <details
+          class="faq__item"
+          data-faq-item
+          data-reveal
+          style={`--i: ${idx % 3};`}
+          open={idx === 0}
+        >
+          <summary class="faq__summary">
+            <span class="faq__question">{item.question}</span>
+            <span class="faq__icon" aria-hidden="true">
+              <Icon name="chevron-down" size={20} />
+            </span>
+          </summary>
+
+          <div class="faq__answer-wrap">
+            <p class="faq__answer">{item.answer}</p>
+            {item.sourceUrl && item.sourceLabel && (
+              <div class="faq__source">
+                <LinkArrow href={item.sourceUrl} external={true} tone="light">
+                  Fuente: {item.sourceLabel}
+                </LinkArrow>
+              </div>
+            )}
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .faq__list {
+    max-width: 960px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq__item {
+    border: 1px solid var(--border-on-light-strong);
+    border-radius: var(--radius-lg);
+    background-color: var(--gallery);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .faq__item[open] {
+    border-color: var(--purple);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .faq__summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.35rem 1.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(1.08rem, 1.4vw, 1.25rem);
+    color: var(--ink);
+  }
+
+  .faq__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--gallery-muted);
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(180deg);
+    background-color: var(--purple);
+    color: var(--gallery);
+  }
+
+  .faq__answer-wrap {
+    padding: 0 1.65rem 1.5rem 1.65rem;
+    border-top: 1px solid var(--border-on-light);
+    padding-top: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .faq__answer {
+    color: var(--text-on-light-muted);
+    max-width: 74ch;
+  }
+
+  .faq__source {
+    padding-top: 0.25rem;
+  }
+</style>
+
